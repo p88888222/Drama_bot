@@ -2,7 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const fetch = require('node-fetch');
 
 // Token diambil dari Environment Variable di Railway nanti
-const token = process.env.TELEGRAM_TOKEN;
+const token = process.env.8309505054:AAGGOkzQKs_qjablWJsSA1a9TeXhCJt82oc;
 const bot = new TelegramBot(token, {polling: true});
 
 // GANTI LINK INI DENGAN LINK VERCEL ANDA
