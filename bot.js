@@ -6,7 +6,7 @@ const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, {polling: true});
 
 // GANTI LINK INI DENGAN LINK VERCEL ANDA
-const WEB_APP_URL = 'https://URL_VERCEL_ANDA.vercel.app';
+const WEB_APP_URL = 'https://dramaxin-box.vercel.app';
 
 bot.onText(/\/start/, (msg) => {
     bot.sendMessage(msg.chat.id, "🎬 **DRAMAXIN BOX**\n\nSelamat datang! Cari drama favoritmu atau klik tombol di bawah.", {
