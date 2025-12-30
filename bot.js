@@ -66,3 +66,49 @@ bot.on('message', async (msg) => {
     console.error("API Error:", e.message);
   }
 });
+bot.on('message', async (msg) => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
+
+  if (!text || text.startsWith('/')) return;
+
+  try {
+    // Mengambil data dari 3 sumber sekaligus agar hasil lebih pasti ditemukan
+    const [res1, res2] = await Promise.all([
+      fetch("https://api.sansekai.my.id/api/dramabox/trending"),
+      fetch("https://api.sansekai.my.id/api/dramabox/latest")
+    ]);
+    
+    const json1 = await res1.json();
+    const json2 = await res2.json();
+    
+    const allDramas = [
+      ...(json1.data?.data || json1.data || []),
+      ...(json2.data?.data || json2.data || [])
+    ];
+    
+    // Menghapus duplikat dan mencari judul yang cocok
+    const uniqueDramas = Array.from(new Map(allDramas.map(item => [item.bookId || item.id, item])).values());
+    const results = uniqueDramas.filter(d => 
+      (d.bookName || d.title || "").toLowerCase().includes(text.toLowerCase())
+    ).slice(0, 3);
+
+    if (results.length === 0) {
+      return bot.sendMessage(chatId, "❌ Maaf, judul tersebut tidak ditemukan di koleksi kami.");
+    }
+
+    for (const item of results) {
+      bot.sendPhoto(chatId, item.coverWap || item.cover, {
+        caption: `🎬 *${item.bookName || item.title}*`,
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [[
+            { text: "📺 TONTON DI APLIKASI", web_app: { url: `${WEB_APP_URL}?bookId=${item.bookId || item.id}` } }
+          ]]
+        }
+      });
+    }
+  } catch (e) {
+    bot.sendMessage(chatId, "⚠️ Terjadi gangguan koneksi ke server drama.");
+  }
+});
