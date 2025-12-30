@@ -11,7 +11,7 @@ if (!token) {
 const bot = new TelegramBot(token, { polling: true });
 
 // PENTING: Ganti dengan link Vercel Anda yang AKTIF
-const WEB_APP_URL = 'https://drmaxin-box.vercel.app';
+const WEB_APP_URL = 'https://dramaxin-box.vercel.app';
 
 console.log("Bot Dramaxin sedang berjalan dengan metode Query...");
 
