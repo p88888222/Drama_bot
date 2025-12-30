@@ -31,18 +31,22 @@ bot.on('message', async (msg) => {
 
   try {
     // Memanggil API Search menggunakan query (Sesuai metode Web)
-    const response = await fetch(`https://api.sansekai.my.id/api/dramabox/search?query=${encodeURIComponent(text)}`);
+    const searchUrl = `https://api.sansekai.my.id/api/dramabox/search?query=${encodeURIComponent(text)}`;
+    const response = await fetch(searchUrl);
     const json = await response.json();
     
     // Mengambil array data dari hasil pencarian
     const results = json.data?.data || json.data || [];
 
     if (!Array.isArray(results) || results.length === 0) {
-      return bot.sendMessage(chatId, `❌ Judul "${text}" tidak ditemukan.`);
+      return bot.sendMessage(chatId, `❌ Maaf, drama dengan kata kunci "${text}" tidak ditemukan.`);
     }
 
-    // Ambil 3 hasil teratas
-    for (const item of results.slice(0, 3)) {
+    // Menampilkan 3 hasil teratas agar tidak spam di chat
+    const limitedResults = results.slice(0, 3);
+
+    for (const item of limitedResults) {
+      // Menggunakan bookId dan bookName sesuai contoh JSON pencarian
       const id = item.bookId || item.id;
       const name = item.bookName || item.title;
       const cover = item.cover || item.coverWap;
