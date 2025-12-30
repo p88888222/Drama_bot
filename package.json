@@ -1,6 +1,7 @@
 {
   "name": "dramaxin-bot",
   "version": "1.0.0",
+  "description": "Bot Telegram Dramaxin Box",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
@@ -10,6 +11,8 @@
     "node-fetch": "^2.7.0"
   },
   "engines": {
-    "node": ">=16"
-  }
+    "node": ">=16.0.0"
+  },
+  "author": "Dramaxin",
+  "license": "ISC"
 }
