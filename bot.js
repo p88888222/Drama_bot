@@ -58,36 +58,3 @@ bot.on('message', async (msg) => {
 });
 
 console.log("Bot Dramaxin sedang berjalan...");
-
-BAGIAN 2: Kode untuk Website (Update file app.js di Proyek Vercel Anda)
-Agar website Anda bisa menangkap klik dari Telegram dan langsung memutar video, tambahkan/update kode berikut di bagian paling bawah file app.js proyek Vercel Anda:
-/** * INTEGRASI TELEGRAM WEB APP
- * Tambahkan ini di bagian paling bawah file app.js Anda
- */
-
-function handleTelegramDeepLink() {
-    // Ambil parameter ?bookId= dari URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const bookId = urlParams.get('bookId');
-
-    if (bookId) {
-        console.log("Membuka drama dari Telegram ID:", bookId);
-        // Beri jeda 1 detik agar data API utama selesai dimuat
-        setTimeout(() => {
-            if (typeof openDetail === 'function') {
-                openDetail(bookId, "Memuat...", "Menyiapkan video dari Telegram...");
-            }
-        }, 1200);
-    }
-}
-
-// Inisialisasi SDK Telegram
-if (window.Telegram && window.Telegram.WebApp) {
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand(); // Layar penuh
-    tg.setHeaderColor('#0b0f1a'); // Sesuaikan dengan warna tema Anda
-}
-
-// Jalankan fungsi deep link saat halaman dimuat
-window.addEventListener('load', handleTelegramDeepLink);
