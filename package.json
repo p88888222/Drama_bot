@@ -1,7 +1,6 @@
 {
   "name": "dramaxin-bot",
   "version": "1.0.0",
-  "description": "Bot Telegram Dramaxin",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
